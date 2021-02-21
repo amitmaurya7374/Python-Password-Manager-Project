@@ -10,15 +10,18 @@ def save():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
-    isok = messagebox.askokcancel(title=f"{website}",
-                                  message=f"These are the details you entered: \n Email: {email}\n Password: {password}\n "
-                                          f"Is it ok to save?")
-    if isok:
-        with open("data.txt", "a") as data:
-            data.write(f"{website},| {email},| {password}\n")
-            website_entry.delete(0, END)
-            email_entry.delete(0, END)
-            password_entry.delete(0, END)
+    if len(website) <= 0 or len(email) <= 0 or len(password) <= 0:
+        messagebox.showwarning(title="warning",message="Please provide value to all fields")
+    else:
+        isok = messagebox.askokcancel(title=f"{website}",
+                                      message=f"These are the details you entered: \n Email: {email}\n Password: {password}\n "
+                                              f"Is it ok to save?")
+        if isok:
+            with open("data.txt", "a") as data:
+                data.write(f"{website},| {email},| {password}\n")
+                website_entry.delete(0, END)
+                email_entry.delete(0, END)
+                password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
