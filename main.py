@@ -1,3 +1,4 @@
+import json
 import random
 from tkinter import *
 from tkinter import messagebox
@@ -34,23 +35,38 @@ def password_generator():
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+"""Here we want to add our data into a json format we will perfom read ,write and update operation on 
+    json data .
+    json data is  like dictionary key:value .In value it has nested list and dictionary
+    for read we use json.load()
+    for write we use :json.dump()=> it take data we want to write and a file name in which we want to dump our data
+    for update we use :json.update()
+"""
+
+
 def save():
     """Save a data into a data file"""
     website = website_entry.get()
     email = email_entry.get()
     passwd = password_entry.get()
+    json_data = {
+        website: {
+            "email": email,
+            "password": passwd
+        }
+    }
+
     if len(website) <= 0 or len(email) <= 0 or len(passwd) <= 0:
         messagebox.showwarning(title="warning", message="Please provide value to all fields")
     else:
-        isok = messagebox.askokcancel(title=f"{website}",
-                                      message=f"These are the details you entered: \n Email: {email}\n Password: {passwd}\n "
-                                              f"Is it ok to save?")
-        if isok:
-            with open("data.txt", "a") as data:
-                data.write(f"{website},| {email},| {passwd}\n")
-                website_entry.delete(0, END)
-                email_entry.delete(0, END)
-                password_entry.delete(0, END)
+        # isok = messagebox.askokcancel(title=f"{website}", message=f"These are the details you entered: \n Email: {
+        # email}\n Password: {passwd}\n " f"Is it ok to save?") if isok:
+        with open("data.json", "w") as file:
+            json.dump(json_data, file, indent=4)
+            # data.write(f"{website},| {email},| {passwd}\n")
+            website_entry.delete(0, END)
+            email_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
