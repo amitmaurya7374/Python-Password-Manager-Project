@@ -63,9 +63,17 @@ def save():
         # email}\n Password: {passwd}\n " f"Is it ok to save?") if isok:
         with open("data.json", "r") as file:
             # json.dump(json_data, file, indent=4,) # writing a json data into a file
-            readed_data = json.load(file)  # reading a json data from a file it returns a Python dictionary
-            print(readed_data)
+            # readed_data = json.load(file)  # reading a json data from a file it returns a Python dictionary
+            # print(readed_data)
             # data.write(f"{website},| {email},| {passwd}\n")
+            # steps to update a data
+            # step 1 read a  old data from a file
+            old_data = json.load(file)
+            # step 2: update old data to new_data
+            old_data.update(json_data)
+        #     step 3 write new_data to file
+        with open("data.json", "w") as file:
+            json.dump(old_data, file, indent=4)
             website_entry.delete(0, END)
             email_entry.delete(0, END)
             password_entry.delete(0, END)
